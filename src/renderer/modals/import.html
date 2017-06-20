@@ -1,92 +1,92 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>import data</title>
+  <meta charset="utf-8">
+  <title>import data</title>
 
-    <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.css">
 </head>
 
 <body>
 
 <div id="import">
-    <div class="container">
-        <div class="main">
-            <h2 class="page-header">Import Data</h2>
+  <div class="container">
+    <div class="main">
+      <h2 class="page-header">Import Data</h2>
 
-            <form id="form" action="http://localhost:8080/alldata" method="post">
-                <div class="form-group row">
-                    <div class="col-xs-6">
-                        <label for="slseason">Season</label>
-                        <select class="form-control" id="slseason" name="season">
-                            <option>2016-17</option>
-                            <option>2015-16</option>
-                            <option>2014-15</option>
-                            <option>2013-14</option>
-                        </select>
-                    </div>
+      <form id="form" action="http://localhost:8080/alldata" method="post">
+        <div class="form-group row">
+          <div class="col-xs-6">
+            <label for="slseason">Season</label>
+            <select class="form-control" id="slseason" name="season">
+              <option>2016-17</option>
+              <option>2015-16</option>
+              <option>2014-15</option>
+              <option>2013-14</option>
+            </select>
+          </div>
 
-                    <div class="col-xs-6">
-                        <label for="sltype">Season Type</label>
-                        <select class="form-control" id="sltype" name="seasonType">
-                            <option>Preseason</option>
-                            <option selected>Regular Season</option>
-                            <option>Playoffs</option>
-                        </select>
-                    </div>
-                </div>
-
-                <button type="button" id="ipBtn" class="btn btn-primary btn-block" onclick="openSSE()">import</button>
-            </form>
-            <br>
-
-            <div class="panel panel-default">
-                <div class="panel-heading">Process</div>
-                <div class="panel-body">
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped progress-bar-info active" id="progress-bar" role="progressbar"
-                             aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
-                            0%
-                        </div>
-                    </div>
-
-                    <div id="msgBox" class="well well-sm">Basic Well</div>
-                </div>
-            </div>
-
+          <div class="col-xs-6">
+            <label for="sltype">Season Type</label>
+            <select class="form-control" id="sltype" name="seasonType">
+              <option>Preseason</option>
+              <option selected>Regular Season</option>
+              <option>Playoffs</option>
+            </select>
+          </div>
         </div>
 
-        <a id="close" href="javascript:window.close()">Close this Window</a>
+        <button type="button" id="ipBtn" class="btn btn-primary btn-block" onclick="openSSE()">import</button>
+      </form>
+      <br>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">Process</div>
+        <div class="panel-body">
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-info active" id="progress-bar" role="progressbar"
+                 aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+              0%
+            </div>
+          </div>
+
+          <div id="msgBox" class="well well-sm">Basic Well</div>
+        </div>
+      </div>
+
     </div>
+
+    <a id="close" href="javascript:window.close()">Close this Window</a>
+  </div>
 </div>
 
 <script>
-    function openSSE() {
-        let index = 0;
-        const pgBar = document.getElementById("progress-bar");
-        const button = document.getElementById("ipBtn");
+  function openSSE() {
+    let index = 0;
+    const pgBar = document.getElementById("progress-bar");
+    const button = document.getElementById("ipBtn");
 
-        button.disabled = true;
-        document.getElementById("form").submit();
+    button.disabled = true;
+    document.getElementById("form").submit();
 
-        if (typeof (EventSource) !== "undefined") {
-            const source = new EventSource("http://localhost:8080/sse");
-            source.onmessage = function (event) {
-                const msg = JSON.parse(event.data);
-                if (msg.type === "info") {
-                    document.getElementById("msgBox").innerHTML = msg.info;
-                    index++;
-                    pgBar.setAttribute("aria-valuenow", index);
-                    pgBar.style.width = index + '%';
-                    pgBar.innerHTML = index + '%';
-                } else if (msg.type === "close") {
-                    source.close();
-                    button.disabled = false;
-                    console.log("connection closed");
-                }
-            };
+    if (typeof (EventSource) !== "undefined") {
+      const source = new EventSource("http://localhost:8080/sse");
+      source.onmessage = function (event) {
+        const msg = JSON.parse(event.data);
+        if (msg.type === "info") {
+          document.getElementById("msgBox").innerHTML = msg.info;
+          index++;
+          pgBar.setAttribute("aria-valuenow", index);
+          pgBar.style.width = index + '%';
+          pgBar.innerHTML = index + '%';
+        } else if (msg.type === "close") {
+          source.close();
+          button.disabled = false;
+          console.log("connection closed");
         }
+      };
     }
+  }
 
 </script>
 

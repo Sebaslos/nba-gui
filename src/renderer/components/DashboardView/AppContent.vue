@@ -70,7 +70,6 @@
     import axios from 'axios'
     import LineChart from '../../assets/js/LineChart'
 
-    const BrowserWindow = require('electron').remote.BrowserWindow
     import {ipcRenderer} from 'electron'
     import path from 'path'
 
@@ -87,7 +86,6 @@
             }
         },
         mounted () {
-            // this.setChartData();
             const newWindowBtn = document.getElementById("import-btn")
 
             newWindowBtn.addEventListener('click', function () {

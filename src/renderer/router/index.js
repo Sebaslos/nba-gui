@@ -4,18 +4,28 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 export default new Router({
-    routes: [
+  routes: [
+    {
+      path: '/dashboard',
+      component: require('@/components/DashboardView'),
+      children: [
         {
-            path: '/',
-            component: require('@/components/DashboardView')
+          path: '',
+          component: require('@/components/DashboardView/AppContent')
         },
         {
-            path: '*',
-            redirect: '/'
-        },
-        {
-            path: '/help',
-            component: require('@/components/LandingPage')
+          path: 'player',
+          component: require('@/components/DashboardView/PlayerView/PlayerShotZoneView')
         }
-    ]
+      ]
+    },
+    {
+      path: '*',
+      redirect: '/dashboard'
+    },
+    {
+      path: '/help',
+      component: require('@/components/LandingPage')
+    }
+  ]
 })
