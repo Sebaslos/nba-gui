@@ -16,6 +16,10 @@ export default new Router({
         {
           path: 'player',
           component: require('@/components/DashboardView/PlayerView/PlayerShotZoneView')
+        },
+        {
+          path: 'player/shotzonewithtype',
+          component: require('@/components/DashboardView/PlayerView/PlayerShotZWA')
         }
       ]
     },

@@ -20,8 +20,6 @@
       <button type="button" class="btn btn-primary btn-block" @click="getTableData">Run</button>
     </div>
 
-    <span>Selected: {{ season }} {{ seasonType }} {{ player.id }} {{ player.name }} </span>
-
     <h2 class="sub-header">Shot Area Charts</h2>
 
     <!--<bar-chart :chart-data="dataCollection" :height="100"></bar-chart>-->
@@ -31,7 +29,7 @@
         <pie-chart :chart-data="FGMData" :options="options"></pie-chart>
       </div>
       <div class="col-sm-6">
-        <pie-chart :chart-data="FGAData" :options="options"></pie-chart>
+        <pie-chart :chart-data="FGAData" :options="getChartOption('FGA of every shot zone %')"></pie-chart>
       </div>
     </div>
 
@@ -92,7 +90,7 @@
             text: 'FGM of every shot zone'
           },
           legend: {
-            display: false
+            display: true
           }
         }
       }
@@ -106,6 +104,17 @@
       },
       setPlayer (player) {
         this.player = player
+      },
+      getChartOption (title) {
+        return {
+          title: {
+            display: true,
+            text: title
+          },
+          legend: {
+            display: true
+          }
+        }
       },
       getTableData () {
         axios.get('http://localhost:8080/player/shotzone', {
@@ -122,8 +131,29 @@
             console.log(error);
           });
       },
+      getRandomColor () {
+        let letters = '0123456789ABCDEF'.split('');
+        let color = '#';
+        for (let i = 0; i < 6; i++ ) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      },
+      getRandomColorEachBar (count) {
+        let data = [];
+        for (let i = 0; i < count; i++) {
+          data.push(this.getRandomColor());
+        }
+        return data;
+      },
+      getMaxNumIndex (arr) {
+        const max = Math.max(...arr);
+        return arr.indexOf(max);
+      },
       fillChartData () {
         let labels = [];
+        let FGMLabels = [];
+        let FGALabels = [];
         let FGM = [];
         let FGA = [];
 
@@ -131,45 +161,72 @@
 
         let rowSet = this.tableData.rowSet;
         let length = rowSet.length;
-        /*        for (let i = 0; i < length; i++) {
-         let row = rowSet[i];
-         if (row[0] !== "null") {
-         labels.push(row[0]);
-         FGM.push(row[1]);
-         FGA.push(row[2]);
-         } else {
-         sumFGM = row[1];
-         sumFGA = row[2];
-         }
-         }*/
+
         sumFGM = rowSet[length - 1][1];
         sumFGA = rowSet[length - 1][2];
 
         for (let i = 0; i < length - 1; i++) {
           let row = rowSet[i];
           labels.push(row[0]);
-          FGM.push(row[1]);
-          FGA.push(row[2]);
+          FGMLabels.push(row[0]);
+          FGALabels.push(row[0]);
+//          FGM.push((row[1] / sumFGM * 100).toFixed(1));
+          FGM.push(Math.round((row[1] / sumFGM * 100) * 1e1) / 1e1);
+//          FGA.push((row[2] / sumFGA * 100).toFixed(1));
+          FGA.push(Math.round((row[2] / sumFGA * 100) * 1e1) / 1e1);
+        }
+
+        let newFGM = [];
+        let newFGA = [];
+        let newFGMLabels = [];
+        let newFGALabels = [];
+
+        for (let i = 0; i < 5 && i < length; i++) {
+          const fgmIndex = this.getMaxNumIndex(FGM);
+          const fgaIndex = this.getMaxNumIndex(FGA);
+
+          console.log('fgmindex = ' + fgmIndex);
+          console.log('fgaindex = ' + fgaIndex);
+
+          newFGM.push(FGM.splice(fgmIndex, 1));
+          newFGA.push(FGA.splice(fgaIndex, 1));
+
+          newFGMLabels.push(FGMLabels.splice(fgmIndex, 1));
+          newFGALabels.push(FGALabels.splice(fgaIndex, 1));
         }
 
         this.FGMData = {
-          labels: labels,
+          labels: newFGMLabels,
           datasets: [
             {
               label: 'FGM',
-              backgroundColor: '#f87979',
-              data: FGM
+//              backgroundColor: this.getRandomColorEachBar(length - 1),
+              backgroundColor: [
+                '#FF6384',
+                '#36A2EB',
+                '#4BC0C0',
+                '#FFCD56',
+                '#FF9F40'
+              ],
+              data: newFGM
             }
           ]
         }
 
         this.FGAData = {
-          labels: labels,
+          labels: newFGALabels,
           datasets: [
             {
               label: 'FGA',
-              backgroundColor: '#05CBE1',
-              data: FGA
+//              backgroundColor: this.getRandomColorEachBar(length - 1),
+              backgroundColor: [
+                '#FF6384',
+                '#36A2EB',
+                '#4BC0C0',
+                '#FFCD56',
+                '#FF9F40'
+              ],
+              data: newFGA
             }
           ]
         }
