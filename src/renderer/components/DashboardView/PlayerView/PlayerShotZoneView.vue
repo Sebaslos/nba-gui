@@ -3,15 +3,15 @@
     <h1 class="page-header">Player Shot Analyse</h1>
 
     <div class="form-group row">
-      <div class="col-xs-4">
+      <div class="col-xs-3">
         <season-select v-on:getSeason="setSeason"></season-select>
       </div>
 
-      <div class="col-xs-4">
+      <div class="col-xs-3">
         <seasontype-select v-on:getSeasonType="setSeasonType"></seasontype-select>
       </div>
 
-      <div class="col-xs-4">
+      <div class="col-xs-6">
         <player-select v-on:getPlayer="setPlayer"></player-select>
       </div>
     </div>

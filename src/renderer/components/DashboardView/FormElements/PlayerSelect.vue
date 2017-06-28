@@ -1,19 +1,25 @@
 <template>
   <div>
     <label for="slplayer">Player</label>
-    <select class="form-control" id="slplayer" @change="emitOption" v-model="player">
+<!--    <select class="form-control" id="slplayer" @change="emitOption" v-model="player">
       <option v-for="option in sortList" v-bind:value="option">
         {{ option.name }}
       </option>
+:value.sync="player"
+    </select>-->
+    <v-select id="slplayer" label="name" :options="sortList" :on-change="emitPlayer"></v-select>
 
-    </select>
   </div>
 </template>
 
 <script>
   import axios from 'axios'
+  import vSelect from 'vue-select'
 
   export default {
+    components: {
+      vSelect
+    },
     data () {
       return {
         player: {},
@@ -34,6 +40,9 @@
     methods: {
       emitOption () {
         this.$emit('getPlayer', this.player);
+      },
+      emitPlayer (val) {
+        this.$emit('getPlayer', val);
       },
       getPlayerList () {
         axios.get('http://localhost:8080/player/all')
