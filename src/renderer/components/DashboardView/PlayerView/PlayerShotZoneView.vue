@@ -20,20 +20,22 @@
       <button type="button" class="btn btn-primary btn-block" @click="getTableData">Run</button>
     </div>
 
-    <h2 class="sub-header">Shot Area Charts</h2>
+    <!--<h2 class="sub-header">Shot Area Charts</h2>-->
+    <h2 class="sub-header">{{ sectionTitle }} Charts</h2>
 
     <!--<bar-chart :chart-data="dataCollection" :height="100"></bar-chart>-->
 
     <div class="row">
       <div class="col-sm-6">
-        <pie-chart :chart-data="FGMData" :options="getChartOption('FGM of every shot zone %')"></pie-chart>
+        <pie-chart :chart-data="FGMData" :options="getChartOption('FGM of every ' + sectionTitle + ' %')"></pie-chart>
       </div>
       <div class="col-sm-6">
         <pie-chart :chart-data="FGAData" :options="getChartOption('FGA of every shot zone %')"></pie-chart>
       </div>
     </div>
 
-    <h2 class="sub-header">Shot Area Table</h2>
+    <!--<h2 class="sub-header">Shot Area Table</h2>-->
+    <h2 class="sub-header">{{ sectionTitle }} Table</h2>
 
     <div class="table-responsive">
       <table class="table table-striped">
@@ -59,6 +61,7 @@
 
 
 <script>
+  import {mapActions, mapGetters} from 'vuex'
   import axios from 'axios'
   import BarChart from '../../../assets/js/BarChart'
   import PieChart from '../../../assets/js/PieChart'
@@ -86,6 +89,12 @@
         FGAData: {}
       }
     },
+    computed: {
+      ...mapGetters({
+        sectionTitle: 'sectionTitle',
+        endpoint: 'endpoint'
+      })
+    },
     methods: {
       setSeason (season) {
         this.season = season
@@ -108,7 +117,7 @@
         }
       },
       getTableData () {
-        axios.get('http://localhost:8080/player/shotzone', {
+        axios.get('http://localhost:8080/player/' + this.endpoint, {
           params: {
             playerName: this.player.name,
             season: this.season,

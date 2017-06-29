@@ -11,3 +11,7 @@ export const incrementMain = ({ commit }) => {
 export const updateTable = ({ commit }, data) => {
   commit(types.UPDATE_TABLE, data)
 }
+
+export const updateView = ({ commit }, data) => {
+  commit(types.UPDATE_VIEW, data)
+}
