@@ -26,7 +26,7 @@
 
     <div class="row">
       <div class="col-sm-6">
-        <pie-chart :chart-data="FGMData" :options="options"></pie-chart>
+        <pie-chart :chart-data="FGMData" :options="getChartOption('FGM of every shot zone %')"></pie-chart>
       </div>
       <div class="col-sm-6">
         <pie-chart :chart-data="FGAData" :options="getChartOption('FGA of every shot zone %')"></pie-chart>
@@ -83,16 +83,7 @@
         tableData: {},
         dataCollection: {},
         FGMData: {},
-        FGAData: {},
-        options: {
-          title: {
-            display: true,
-            text: 'FGM of every shot zone'
-          },
-          legend: {
-            display: true
-          }
-        }
+        FGAData: {}
       }
     },
     methods: {
@@ -134,7 +125,7 @@
       getRandomColor () {
         let letters = '0123456789ABCDEF'.split('');
         let color = '#';
-        for (let i = 0; i < 6; i++ ) {
+        for (let i = 0; i < 6; i++) {
           color += letters[Math.floor(Math.random() * 16)];
         }
         return color;
@@ -161,6 +152,16 @@
 
         let rowSet = this.tableData.rowSet;
         let length = rowSet.length;
+
+        if (length === 0) {
+          this.FGMData = {
+            datasets: [ {data: []} ]
+          };
+          this.FGAData = {
+            datasets: [ {data: []} ]
+          };
+          return;
+        }
 
         sumFGM = rowSet[length - 1][1];
         sumFGA = rowSet[length - 1][2];

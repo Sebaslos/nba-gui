@@ -11,7 +11,8 @@
       <li><a href="#">Player</a></li>
       <!--<li><a href="#" @click="updateData('Shot Zone', 'zonequote')">Shot Zone</a></li>-->
       <li><router-link to="/dashboard/player">Shot Zone</router-link></li>
-      <li><a href="#" @click="updateData('Shot Type', 'typequote')">Shot Type</a></li>
+      <!--<li><a href="#" @click="updateData('Shot Type', 'typequote')">Shot Type</a></li>-->
+      <li><router-link to="/dashboard/player" @click="updateData('Shot Type', 'typequote')">Shot Type</router-link></li>
       <li><router-link to="/dashboard/player/shotzonewithtype">Shot Type in Zone</router-link></li>
     </ul>
     <ul class="nav nav-sidebar">

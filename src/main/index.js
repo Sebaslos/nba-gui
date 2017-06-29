@@ -34,7 +34,7 @@ function createWindow() {
 function createImportWindow() {
     const modalPath = path.join('file://', __static, '../src/renderer/modals/import.html')
     let win = new BrowserWindow({
-        width: 600, height: 480, parent: mainWindow, modal: true, show: false
+        width: 600, height: 500, parent: mainWindow, modal: true, show: false
     })
     win.on('close', function () {
         win = null
