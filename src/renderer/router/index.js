@@ -20,6 +20,10 @@ export default new Router({
         {
           path: 'player/shotzonewithtype',
           component: require('@/components/DashboardView/PlayerView/PlayerShotZWA')
+        },
+        {
+          path: 'team/3pointstrend',
+          component: require('@/components/DashboardView/TeamView/Team3PTrend')
         }
       ]
     },

@@ -16,16 +16,14 @@
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
           <li><a @click="go">Dashboard</a></li>
-          <li><a>Settings</a></li>
           <!--<li><router-link to="/import">Import</router-link></li>-->
           <li><a @click="openImportView">Import</a></li>
-          <li>
-            <router-link to="/help">Help</router-link>
-          </li>
+          <li><a>Settings</a></li>
+          <!--<li><router-link to="/help">Help</router-link></li>-->
         </ul>
-        <form class="navbar-form navbar-right">
+<!--        <form class="navbar-form navbar-right">
           <input type="text" class="form-control" placeholder="Search...">
-        </form>
+        </form>-->
       </div>
     </div>
   </nav>
@@ -37,7 +35,7 @@
   export default {
     methods: {
       go () {
-//        this.$router.push("/")
+        this.$router.push("/")
       },
       openImportView () {
         ipcRenderer.send('open-import-window');

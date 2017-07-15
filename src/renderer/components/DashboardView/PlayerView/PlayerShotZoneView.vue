@@ -30,7 +30,7 @@
         <pie-chart :chart-data="FGMData" :options="getChartOption('FGM of every ' + sectionTitle + ' %')"></pie-chart>
       </div>
       <div class="col-sm-6">
-        <pie-chart :chart-data="FGAData" :options="getChartOption('FGA of every shot zone %')"></pie-chart>
+        <pie-chart :chart-data="FGAData" :options="getChartOption('FGA of every ' + sectionTitle + ' %')"></pie-chart>
       </div>
     </div>
 
@@ -90,10 +90,10 @@
       }
     },
     computed: {
-      ...mapGetters({
-        sectionTitle: 'sectionTitle',
-        endpoint: 'endpoint'
-      })
+      ...mapGetters([
+        'sectionTitle',
+        'endpoint'
+      ])
     },
     methods: {
       setSeason (season) {
