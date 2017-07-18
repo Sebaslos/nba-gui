@@ -20,9 +20,8 @@
       <button type="button" class="btn btn-primary btn-block" @click="getTableData">Run</button>
     </div>
 
-    <!--<h2 class="sub-header">Shot Area Charts</h2>-->
     <h2 class="sub-header">3 Points Charts</h2>
-    <line-chart :chart-data="dataCollection" :height="100"></line-chart>
+    <bar-chart :chart-data="dataCollection" :height="100"></bar-chart>
 
     <h2 class="sub-header">3 Points Table</h2>
 
@@ -48,22 +47,20 @@
 
 </template>
 
-
 <script>
   import axios from 'axios'
-  import LineChart from '../../../assets/js/LineChart'
+  import BarChart from '../../../assets/js/BarChart'
 
   import SeasonSelect from '../FormElements/SeasonSelect'
   import SeasontypeSelect from '../FormElements/SeasontypeSelect'
   import TeamSelect from '../FormElements/TeamSelect'
-
 
   export default {
     components: {
       SeasonSelect,
       SeasontypeSelect,
       TeamSelect,
-      LineChart
+      BarChart
     },
     data () {
       return {
@@ -85,7 +82,7 @@
         this.team = team
       },
       getTableData () {
-        axios.get('http://localhost:8080/team/3ptrend', {
+        axios.get('http://localhost:8080/team/3pzone', {
           params: {
             teamName: this.team.name,
             season: this.season,
@@ -108,10 +105,10 @@
         let length = rowSet.length;
         for (let i = 0; i < length; i++) {
           let row = rowSet[i];
-          if (row[0] !== "Sum" && row[1] === "Sum") {
+          if (i !== 0 && i !== length - 1) {
             labels.push(row[0]);
-            data1.push(row[2]);
-            data2.push(row[3]);
+            data1.push(row[1]);
+            data2.push(row[2]);
           }
         }
 
@@ -119,19 +116,19 @@
           labels: labels,
           datasets: [
             {
-              label: '3PA',
+              label: '3PM',
               backgroundColor: '#f87979',
               data: data1
             }, {
-              label: 'FGA',
+              label: '3PA',
               backgroundColor: '#05CBE1',
               data: data2
             }
           ]
         }
+
       }
     }
-
   }
-</script>
 
+</script>

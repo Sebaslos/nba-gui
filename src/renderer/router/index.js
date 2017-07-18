@@ -24,6 +24,10 @@ export default new Router({
         {
           path: 'team/3pointstrend',
           component: require('@/components/DashboardView/TeamView/Team3PTrend')
+        },
+        {
+          path: 'team/3pointszone',
+          component: require('@/components/DashboardView/TeamView/Team3PZone')
         }
       ]
     },

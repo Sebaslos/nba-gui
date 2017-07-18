@@ -25,6 +25,9 @@
       <li>
         <router-link to="/dashboard/team/3pointstrend">3 Points Trend</router-link>
       </li>
+      <li>
+        <router-link to="/dashboard/team/3pointszone">3 Points Zone</router-link>
+      </li>
       <!--<li><a href="#" @click="updateData('Team 3 Points Trend', 'team3point')">3 Points Trend</a></li>-->
     </ul>
   </div>

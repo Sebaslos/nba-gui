@@ -88,13 +88,13 @@
 //        let rowspan = 1;
         for (let i = 0; i < length; i++) {
 //          let row = rowSet[i];
-          if (rowSet[i][0] !== "null") {
+          if (rowSet[i][0] !== "Sum") {
             rowSet[i][4] = 1;
             rowSet[i][5] = false;
 
             let j = i + 1;
             for (; j < length; j++) {
-              if (rowSet[i][0] === rowSet[j][0] && rowSet[j][0] !== "null") {
+              if (rowSet[i][0] === rowSet[j][0] && rowSet[j][0] !== "Sum") {
                 rowSet[i][4]++;
                 rowSet[i][5] = true;
                 rowSet[j][4] = 1;
@@ -113,7 +113,7 @@
 
         this.zoneTypeData = [];
         for (let i = 0; i < length; i++) {
-          if (rowSet[i][0] !== "null") {
+          if (rowSet[i][0] !== "Sum") {
             this.zoneTypeData.push(rowSet[i]);
           }
         }
