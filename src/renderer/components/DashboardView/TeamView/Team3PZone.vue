@@ -100,6 +100,7 @@
         let labels = [];
         let data1 = [];
         let data2 = [];
+        let data3 = [];
 
         let rowSet = this.tableData.rowSet;
         let length = rowSet.length;
@@ -109,6 +110,7 @@
             labels.push(row[0]);
             data1.push(row[1]);
             data2.push(row[2]);
+            data3.push(row[3]);
           }
         }
 
@@ -123,6 +125,10 @@
               label: '3PA',
               backgroundColor: '#05CBE1',
               data: data2
+            }, {
+              label: '3P%',
+              backgroundColor: '#4BC0C0',
+              data: data3
             }
           ]
         }

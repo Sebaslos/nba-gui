@@ -77,7 +77,8 @@
       source.onmessage = function (event) {
         const msg = JSON.parse(event.data);
         if (msg.type === "info") {
-          document.getElementById("msgBox").innerHTML = msg.info;
+          // document.getElementById("msgBox").innerHTML = msg.info;
+          document.getElementById("msgBox").innerHTML = 'importing all shotcharts of Cavaliers';
         } else if (msg.type === "process") {
           index++;
           const pvalue = Math.round(index / pgBar.getAttribute("aria-valuemax") * 100);

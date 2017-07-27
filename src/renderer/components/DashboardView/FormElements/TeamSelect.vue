@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label for="slteam">Player</label>
+    <label for="slteam">Team</label>
     <v-select id="slteam" label="name" :options="sortList" :on-change="emitTeam"></v-select>
   </div>
 </template>
