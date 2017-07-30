@@ -10,4 +10,8 @@
   }
 </script>
 
-<style src="./assets/css/dashboard.css"></style>
+<!-- <style src="./assets/css/dashboard.css"></style> -->
+<style>
+  @import '~bootstrap/dist/css/bootstrap.css';
+  @import './assets/css/dashboard.css';
+</style>
