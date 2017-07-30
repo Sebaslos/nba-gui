@@ -11,11 +11,12 @@ export default new Router({
       children: [
         {
           path: '',
-          component: require('@/components/DashboardView/AppContent')
+          // component: require('@/components/DashboardView/AppContent')
+          component: require('@/components/DashboardView/AppIndex')
         },
         {
           path: 'player',
-          component: require('@/components/DashboardView/PlayerView/PlayerShotZoneView')
+          component: require('@/components/DashboardView/PlayerView/PlayerShotView')
         },
         {
           path: 'player/shotzonewithtype',
